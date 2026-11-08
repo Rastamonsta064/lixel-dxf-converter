@@ -2,21 +2,61 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lixel → AutoCAD · DXF Repair v1.3</title>
+<title>Lixel → AutoCAD · DXF + MED Converter v1.4</title>
 <style>
 :root{color-scheme:light;--ink:#17202e;--sub:#657083;--edge:#e2e7ed;--bg:#f4f6fa;--accent:#2259cc;--pale:#eef4ff;--ok:#17693b;--warn:#97520d}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}main{max-width:900px;margin:0 auto;padding:40px 20px 68px}.eyebrow{letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-size:11px;font-weight:800}.hero{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:27px}h1{font-size:clamp(27px,5vw,40px);line-height:1.13;letter-spacing:-.035em;margin:8px 0 10px}p{margin:0;color:var(--sub)}.pill{background:#e3eafa;color:#244ba2;padding:6px 10px;font-size:12px;border-radius:50px;white-space:nowrap;font-weight:700}.drop{border:2px dashed #a9bad6;background:#fff;border-radius:18px;padding:35px 22px;text-align:center;transition:.2s}.drop.over{border-color:var(--accent);background:var(--pale)}.drop .ico{font-size:31px;margin-bottom:8px}.drop h2{font-size:20px;letter-spacing:-.02em;margin:0 0 6px}.drop p{margin-bottom:18px}input[type=file]{position:absolute;clip:rect(0 0 0 0);width:1px;height:1px;overflow:hidden}.btn{display:inline-flex;justify-content:center;align-items:center;gap:6px;background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:9px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;line-height:1.3;text-decoration:none}.btn:hover{filter:brightness(.94)}.btn.ghost{background:#fff;color:var(--ink);border-color:#d1d9e4}.btn:disabled{opacity:.45;cursor:not-allowed}.section-title{display:flex;justify-content:space-between;align-items:center;margin:28px 0 13px}.section-title h2{font-size:18px;margin:0}.hint{font-size:12px;color:var(--sub)}.files{display:grid;gap:12px}.file{background:#fff;border:1px solid var(--edge);border-radius:13px;padding:19px}.file-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}.file-name{font-size:16px;font-weight:750;overflow-wrap:anywhere}.file-size{color:var(--sub);font-size:12px}.stats{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.tag{background:#f3f5f8;border:1px solid #edf0f3;border-radius:7px;padding:3px 8px;font-size:12px}.msg{font-size:13px;color:var(--sub);margin-top:10px}.msg.warning{color:var(--warn)}.msg.success{color:var(--ok)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:20px}.info{padding:18px;background:#fff;border:1px solid var(--edge);border-radius:12px}.info h3{font-size:15px;margin:0 0 7px}.info p{font-size:13px}.foot{font-size:12px;color:var(--sub);margin-top:22px}.empty{color:var(--sub);font-size:13px}code{background:#f0f3f7;border-radius:4px;padding:1px 4px}.downloadall{display:none}.file .bad{color:#b42318}details{margin-top:20px;border:1px solid var(--edge);border-radius:12px;background:#fff;padding:14px 18px}summary{font-weight:700;cursor:pointer}ol{padding-left:22px;color:var(--sub)}ol li{padding:3px 0}@media(max-width:600px){main{padding:28px 13px}.hero{display:block}.pill{display:inline-block;margin-top:13px}.card-grid{grid-template-columns:1fr}.drop{padding:25px 13px}}
+
+.tool-tabs{display:flex;gap:8px;background:#e7edf7;padding:5px;border-radius:12px;margin:0 0 18px}.tool-tab{flex:1;background:transparent;border:0;border-radius:8px;padding:12px 10px;color:#4e617d;font-size:15px;font-weight:700;cursor:pointer}.tool-tab.active{background:#fff;color:#194bb3;box-shadow:0 1px 6px #17202e15}.tool-panel[hidden],#med-file-info[hidden],#med-settings[hidden]{display:none!important}.settings-title{font-size:17px;margin:0 0 10px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fields label{display:grid;gap:6px;font-size:13px;font-weight:700;color:#4d5b6f}.fields select{width:100%;min-width:0;padding:10px;border:1px solid #cbd4df;background:#fff;border-radius:8px;color:var(--ink);font-size:14px}.checkline{display:flex;gap:9px;align-items:center;margin-top:15px;font-size:14px;color:var(--ink);font-weight:600;cursor:pointer}.checkline input{width:17px;height:17px}.med-preview{white-space:pre;overflow-x:auto;max-height:260px;background:#141d2b;color:#d1f4d9;border-radius:10px;padding:16px 13px;font-size:13px;line-height:1.6;tab-size:4}.med-settings .bad{color:#b42318}.med-settings .success{color:#17693b}@media(max-width:600px){.fields{grid-template-columns:1fr}.tool-tab{font-size:13px;padding:10px 5px}}
 </style>
 </head>
 <body>
 <main>
- <section class="hero"><div><div class="eyebrow">Локальная утилита · Без сервера</div><h1>Lixel → AutoCAD <small style="font-size:.32em;vertical-align:middle;color:#657083">v1.3</small></h1><p>Проверка и исправление DXF-файлов. Слои, геометрия и исходные координаты сохраняются.</p></div><span class="pill">v1.1 · Офлайн</span></section>
+ <section class="hero"><div><div class="eyebrow">Локальная утилита · Без сервера</div><h1>Lixel → AutoCAD <small style="font-size:.32em;vertical-align:middle;color:#657083">v1.4</small></h1><p>Исправление DXF и преобразование точек из TXT/CSV/XYZ в MED. Обработка файлов только на твоём устройстве.</p></div><span class="pill">v1.4 · Офлайн</span></section>
+
+ <div class="tool-tabs" role="tablist" aria-label="Выбери конвертер">
+  <button class="tool-tab active" type="button" data-tool="dxf" role="tab" aria-selected="true">📐 DXF → AutoCAD</button>
+  <button class="tool-tab" type="button" data-tool="med" role="tab" aria-selected="false">📍 Точки → MED</button>
+ </div>
+ <div id="dxf-mode" class="tool-panel">
  <section id="drop" class="drop" aria-label="Загрузить файлы DXF"><div class="ico">📐</div><h2>Перетащи DXF-файлы сюда</h2><p>Или выбери их на компьютере. Можно загрузить несколько файлов одновременно.</p><label class="btn" for="pick">Выбрать DXF-файлы</label><input id="pick" type="file" accept=".dxf,application/dxf,text/plain" multiple></section>
  <div class="section-title"><h2>Результаты</h2><span class="hint" id="count">Файлы не выбраны</span></div>
  <div id="files" class="files"><div class="empty">После загрузки здесь появятся сведения о чертеже и ссылки на исправленные версии.</div></div>
  <div class="card-grid"><section class="info"><h3>Исправленный DXF</h3><p>Сохраняет все исходные объекты и их DXF-версию. Корректирует границы чертежа <code>EXTMIN / EXTMAX</code>. Самый осторожный вариант, но не лечит любые ошибки файла.</p></section><section class="info"><h3>DXF AutoCAD 2000</h3><p><b>AutoCAD 2000</b> сохраняет линии, полилинии и MTEXT. Режим R12 пока отключён, чтобы не создавать некорректные файлы. AutoCAD 2000 работает с полноценной структурой DXF и сохраняет многострочный текст.</p></section></div>
  <details><summary>Как открыть после конвертации</summary><ol><li>Скачай «AutoCAD 2000» и открой его в AutoCAD через команду <code>OPEN</code>.</li><li>Если чертёж не виден, введи <code>ZOOM</code> и затем <code>E</code>.</li><li>Проверь чертёж и командой <code>SAVEAS</code> сохрани в DWG.</li><li>AutoCAD R12 в этой версии отключён. Если новый DXF не открылся, попробуй «Исправленный исходный DXF».</li></ol></details>
  <p class="foot">Все файлы обрабатываются только внутри браузера: содержимое чертежей никуда не отправляется. Утилита не заменяет AutoCAD и не может гарантировать исправление любого DXF. Перед работой с ответственным чертежом проверь число объектов и координаты в CAD.</p>
+ </div>
+ <div id="med-mode" class="tool-panel" hidden>
+  <section class="drop" id="med-drop" aria-label="Загрузить файл точек"><div class="ico">📍</div><h2>Точки Lixel Studio → MED</h2><p>Загрузи TXT, CSV, TSV, XYZ, PTS, ASC, DAT или MED. Поддерживаются запятые, точки, табуляция, пробелы и точка с запятой.</p><label for="med-pick" class="btn">Выбрать файл с точками</label><input type="file" id="med-pick" accept=".txt,.csv,.tsv,.xyz,.pts,.asc,.dat,.med,text/plain,text/csv"></section>
+  <div id="med-file-info" class="file" hidden style="margin-top:16px"><div class="file-name" id="med-filename"></div><p class="hint" id="med-summary"></p><div class="msg" id="med-offset"></div></div>
+  <section class="file med-settings" id="med-settings" hidden style="margin-top:15px">
+    <h2 class="settings-title">Настройки импорта</h2>
+    <p class="hint" style="margin-bottom:12px">Автоматически определяю колонки по заголовку. Если столбцы в другом порядке — измени соответствие вручную.</p>
+    <div class="fields med-fields">
+     <label>Имя / номер точки<select id="med-map-name"></select></label>
+     <label>X (восток / Easting)<select id="med-map-x"></select></label>
+     <label>Y (север / Northing)<select id="med-map-y"></select></label>
+     <label>Z (высота)<select id="med-map-z"></select></label>
+    </div>
+    <h2 class="settings-title" style="margin-top:21px">Настройки экспорта MED</h2>
+    <div class="fields med-fields">
+     <label>Знаков после запятой<select id="med-precision"><option value="2">2 знака — как в Primer.med (рекомендуется)</option><option value="3">3 знака — сохранить миллиметры (расширенные колонки)</option></select></label>
+     <label>Имена точек<select id="med-naming"><option value="original">Из исходного файла</option><option value="sequential">Пронумеровать заново: 1, 2, 3…</option></select></label>
+    </div>
+    <label class="checkline"><input type="checkbox" id="med-offset-apply"> Прибавить #offset к координатам (только если они локальные)</label>
+    <p class="hint">У стандартного экспорта Lixel координаты уже абсолютные. Обычно этот флажок <strong>не нужен</strong>. Применяй только после проверки системы координат.</p>
+    <div id="med-error" class="msg bad" role="alert" style="margin-top:13px"></div>
+    <div id="med-ready" class="msg success" style="margin-top:10px"></div>
+    <div class="section-title"><h2>Предпросмотр MED</h2><span class="hint" id="med-count"></span></div>
+    <pre class="med-preview" id="med-preview" aria-label="Предпросмотр форматированных точек"></pre>
+    <div class="actions"><button class="btn" id="med-download" type="button" disabled>Скачать .MED</button><button class="btn ghost" id="med-copy" type="button" disabled>Копировать пример</button></div>
+  </section>
+  <div class="card-grid">
+   <section class="info"><h3>Точность и округление</h3><p>В формате из образца X, Y и Z записаны с двумя знаками. Например <code>38.915 → 38.92</code>. Максимальное изменение координаты при округлении — 0.005 м. При необходимости выбери 3 знака, но совместимость расширенных колонок зависит от импортера MED.</p></section>
+   <section class="info"><h3>Проверяй координаты</h3><p>Экспортируются <b>имя, X, Y, Z</b> без заголовка, с таким же выравниванием, как в <code>Primer.med</code>. Программа не переставляет X и Y без указания и не добавляет #offset автоматически. Ошибочные строки останавливают экспорт.</p></section>
+  </div>
+  <p class="foot">Конвертация выполняется на устройстве без отправки точек на сервер. Для работы с геодезическими данными проверь первые и последние координаты после импорта в CAD.</p>
+ </div>
 </main>
 <script>
 'use strict';
@@ -205,6 +245,178 @@ async function addFiles(files){for(const f of files){if(!f.name.toLowerCase().en
   }catch(e){card.innerHTML='<div class="file-name">'+escapeHtml(f.name)+'</div><div class="msg bad">Ошибка: '+escapeHtml(e.message)+'</div>'}
  }}
 elPick.addEventListener('change',e=>{addFiles(e.target.files);elPick.value=''});elDrop.addEventListener('dragover',e=>{e.preventDefault();elDrop.classList.add('over')});elDrop.addEventListener('dragleave',()=>elDrop.classList.remove('over'));elDrop.addEventListener('drop',e=>{e.preventDefault();elDrop.classList.remove('over');addFiles(e.dataTransfer.files)});
+</script>
+<script>
+'use strict';
+// Point-file to MED conversion is deliberately independent of the DXF converter.
+(() => {
+ const $ = id => document.getElementById(id);
+ document.querySelectorAll('[data-tool]').forEach(tab => tab.addEventListener('click', () => {
+   const mode = tab.dataset.tool;
+   document.querySelectorAll('[data-tool]').forEach(t => {t.classList.toggle('active',t.dataset.tool===mode);t.setAttribute('aria-selected',String(t.dataset.tool===mode));});
+   $('dxf-mode').hidden=mode!=='dxf'; $('med-mode').hidden=mode!=='med';
+ }));
+ let current=null, completed=null;
+ const aliases={
+   name:new Set(['name','number','num','id','point','pointid','pointno','pt','ptno','no','номер','имя','точка','точки','numpoint']),
+   x:new Set(['x','coordx','e','east','easting','eastcoord','longitude','восток','координатах']),
+   y:new Set(['y','coordy','n','north','northing','northcoord','latitude','север','координатау']),
+   z:new Set(['z','coordz','h','height','elevation','elev','alt','altitude','level','отметка','высота'])
+ };
+ const canonical=s=>String(s||'').trim().toLowerCase().replace(/^\uFEFF/,'').replace(/[\s_\-\.\/()\[\]]/g,'');
+ function escaped(s){return String(s).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));}
+ function splitDelim(s,delimiter){
+   if(delimiter==='ws')return s.trim().split(/\s+/).filter(x=>x!=='');
+   const out=[];let buf='',quote=false;
+   for(let i=0;i<s.length;i++){
+     const ch=s[i];if(ch==='"'){if(quote&&s[i+1]==='"'){buf+='"';i++;}else quote=!quote;}
+     else if(ch===delimiter&&!quote){out.push(buf.trim());buf='';}else buf+=ch;
+   }out.push(buf.trim());return out;
+ }
+ function detectDelimiter(s){
+   if(s.includes(';'))return ';'; if(s.includes('\t'))return '\t';
+   if(s.includes(',')){
+     // Whitespace-separated decimal commas: '1 184490,952 665960,476 38,915'.
+     if(/\s/.test(s) && /^\s*\S+\s+[+-]?\d+,\d+\s+[+-]?\d+,\d+(?:\s+[+-]?\d+,\d+)?\s*$/.test(s))return 'ws';
+     return ',';
+   }
+   return 'ws';
+ }
+ function cleanNum(input){
+   let s=String(input??'').trim().replace(/^\uFEFF/,'').replace(/\u2212/g,'-');
+   if(/^[-+]?\d+(?:[.,]\d+)?$/.test(s))return s.replace(',','.');
+   throw Error('некорректная координата «'+s.slice(0,40)+'»');
+ }
+ function parseDecimal(s){const norm=cleanNum(s);const n=Number(norm);if(!Number.isFinite(n))throw Error('число вне диапазона');return norm;}
+ function sumDecimal(a,b){
+   // Offset additions use 6 decimal places, without floating-point rounding drift.
+   const scaled=(s) => {const neg=s.startsWith('-');const raw=s.replace(/^[+-]/,'');const parts=raw.split('.');const f=(parts[1]||'').padEnd(6,'0');if(f.length>6)throw Error('offset с точностью более 6 знаков не поддерживается');return BigInt(parts[0])*1000000n*BigInt(neg?-1:1)+BigInt(f)*BigInt(neg?-1:1);};
+   const n=scaled(a)+scaled(b);const sign=n<0n?'-':'';const abs=n<0n?-n:n;
+   return sign+(abs/1000000n).toString()+'.'+(abs%1000000n).toString().padStart(6,'0');
+ }
+ function roundExact(str,places){
+   const neg=str.startsWith('-'),s=str.replace(/^[+-]/,'');const [ip,fp='']=s.split('.');
+   const frac=fp.padEnd(places+1,'0');let units=BigInt(ip)*(10n**BigInt(places))+BigInt(frac.slice(0,places)||'0');
+   if(frac[places]>='5')units+=1n;
+   const mul=10n**BigInt(places);const v=(units/mul).toString()+'.'+(units%mul).toString().padStart(places,'0');
+   return neg&&units!==0n?'-'+v:v;
+ }
+ function sampleHeader(fields){
+   const detected={};for(const field of ['name','x','y','z']){
+     const i=fields.findIndex(v=>aliases[field].has(canonical(v)));
+     if(i>=0)detected[field]=i;
+   }
+   return detected.x!==undefined&&detected.y!==undefined&&detected.z!==undefined?detected:null;
+ }
+ function analyzeText(text){
+   const all=text.replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n').split('\n');
+   const data=[];let offset=null,firstContent=null,delimiter=null;
+   for(let i=0;i<all.length;i++){
+     const line=all[i].trim();if(!line)continue;
+     if(/^#offset\s*[,;\t]/i.test(line)){
+       const f=line.split(/[,;\t]/).slice(1).map(x=>x.trim());
+       if(f.length>=3){try{offset=f.slice(0,3).map(parseDecimal);}catch(_){}}
+       continue;
+     }
+     if(line.startsWith('#')||line.startsWith('//'))continue;
+     if(firstContent===null){firstContent=line;delimiter=detectDelimiter(line);}
+     data.push({line:i+1,fields:splitDelim(line,delimiter)});
+   }
+   if(!data.length)throw Error('Не обнаружено строк с точками.');
+   let header=null;
+   const candidate=sampleHeader(data[0].fields);
+   if(candidate){header={names:data[0].fields,map:candidate};data.shift();}
+   if(!data.length)throw Error('После заголовка нет точек.');
+   const fieldsCount=Math.max(...data.slice(0,150).map(r=>r.fields.length),header?.names.length||0);
+   if(fieldsCount<3)throw Error('Ожидается минимум 3 колонки: X, Y и Z.');
+   const names=Array.from({length:fieldsCount},(_,i)=>{const h=header?.names[i];return (h?h+' — ':'')+'Колонка '+(i+1)});
+   const defaults=header?{name:header.map.name??-1,x:header.map.x,y:header.map.y,z:header.map.z}:
+                   fieldsCount===3?{name:-1,x:0,y:1,z:2}:{name:0,x:1,y:2,z:3};
+   return {data,offset,header,delimiter,names,defaults};
+ }
+ function updateMapControls(meta){
+   for(const field of ['name','x','y','z']){
+     const el=$('med-map-'+field);
+     el.innerHTML='<option value="auto">'+(field==='name'?'Автоматические номера 1, 2, 3…':'Не выбрано')+'</option>'+
+       meta.names.map((v,i)=>'<option value="'+i+'">'+escaped(v)+'</option>').join('');
+     el.value=meta.defaults[field]>=0?String(meta.defaults[field]):'auto';
+   }
+ }
+ function actualMap(){const get=id=>{const v=$('med-map-'+id).value;return v==='auto'?-1:Number(v)};
+   const m={name:get('name'),x:get('x'),y:get('y'),z:get('z')};
+   if([m.x,m.y,m.z].some(v=>v<0))throw Error('Назначь колонки X, Y и Z.');
+   if(new Set([m.x,m.y,m.z]).size!==3)throw Error('Колонки X, Y и Z должны быть разными.');
+   return m;
+ }
+ function formatRow(row,places){
+   const w=places===2?9:10;
+   const vals=[row.x,row.y,row.z].map(v=>v===null?'':roundExact(v,places));
+   if(row.name.length>6)throw Error('Имя «'+row.name+'» длиннее 6 символов. Выбери последовательную нумерацию.');
+   if(!/^[\x21-\x7E]+$/.test(row.name))throw Error('MED из образца использует ASCII-имена. Выбери последовательную нумерацию для имени «'+row.name+'».');
+   if(vals.some(v=>v.length>w))throw Error('Координата не помещается в MED-колонку шириной '+w+' символов.');
+   return row.name.padStart(6,' ')+'   '+vals[0].padStart(w,' ')+' '+vals[1].padStart(w,' ')+' '+vals[2].padStart(places===2?9:10,' ');
+ }
+ function assemble(meta){
+   const map=actualMap(),places=Number($('med-precision').value),renumber=$('med-naming').value==='sequential';
+   const offsetApply=$('med-offset-apply').checked;
+   if(offsetApply&&!meta.offset)throw Error('В файле нет строки #offset, которую можно добавить.');
+   const errors=[],rows=[];
+   for(const record of meta.data){
+     try{
+       const get=n=>record.fields[n]??'';
+       const name=renumber||map.name<0?String(rows.length+1):String(get(map.name)).trim()||String(rows.length+1);
+       let x=parseDecimal(get(map.x)),y=parseDecimal(get(map.y)),zRaw=get(map.z).trim();
+       let z=zRaw===''?null:parseDecimal(zRaw);
+       if(offsetApply){x=sumDecimal(x,meta.offset[0]);y=sumDecimal(y,meta.offset[1]);if(z!==null)z=sumDecimal(z,meta.offset[2]);}
+       rows.push({name,x,y,z});
+     }catch(e){errors.push('Строка '+record.line+': '+e.message);}
+   }
+   if(errors.length)throw Error('Не удалось прочитать '+errors.length+' строк(и): '+errors.slice(0,4).join(' | '));
+   if(!rows.length)throw Error('Не найдены корректные точки.');
+   const medLines=rows.map(row=>formatRow(row,places));
+   return {rows,medLines,body:medLines.join('\r\n')+'\r\n',places};
+ }
+ function refresh(){
+   $('med-error').textContent='';$('med-ready').textContent='';$('med-preview').textContent='';$('med-count').textContent='';
+   $('med-download').disabled=true;$('med-copy').disabled=true;completed=null;
+   if(!current)return;
+   try{
+     completed=assemble(current);
+     $('med-preview').textContent=completed.medLines.slice(0,12).join('\n')+(completed.rows.length>12?'\n...':'');
+     $('med-count').textContent=completed.rows.length+' точек';
+     $('med-ready').textContent='Готово: '+completed.rows.length+' точек; '+completed.places+' знака(ов) после запятой; '+(completed.places===2?'38':'41')+' символов на строку. Все строки прочитаны.';
+     $('med-download').disabled=false;$('med-copy').disabled=false;
+   }catch(e){$('med-error').textContent='Ошибка: '+e.message;}
+ }
+ async function selectFile(file){
+   if(!file)return;let text;
+   try{const bytes=await file.arrayBuffer();try{text=new TextDecoder('utf-8',{fatal:true}).decode(bytes);}catch(_){text=new TextDecoder('windows-1251').decode(bytes);}
+     current=analyzeText(text);
+     $('med-filename').textContent=file.name;
+     $('med-file-info').hidden=false;$('med-settings').hidden=false;
+     $('med-summary').textContent=current.data.length+' строк с данными · разделитель '+({'ws':'пробелы','\t':'табуляция',',':'запятая',';':'точка с запятой'}[current.delimiter]||current.delimiter)+(current.header?' · заголовок распознан':' · без заголовка');
+     $('med-offset').textContent=current.offset?'Найден #offset: '+current.offset.join(', ')+'. Не прибавляется автоматически.':'Строка #offset отсутствует.';
+     $('med-offset-apply').checked=false;
+     updateMapControls(current);refresh();
+   }catch(e){current=null;completed=null;$('med-file-info').hidden=false;$('med-settings').hidden=true;$('med-filename').textContent='Ошибка: '+e.message;$('med-summary').textContent='';$('med-offset').textContent='';}
+ }
+ const pick=$('med-pick'),drop=$('med-drop');
+ pick.addEventListener('change',e=>{selectFile(e.target.files[0]);pick.value='';});
+ drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('over')});
+ drop.addEventListener('dragleave',()=>drop.classList.remove('over'));
+ drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('over');selectFile(e.dataTransfer?.files?.[0]);});
+ for(const id of ['med-map-name','med-map-x','med-map-y','med-map-z','med-precision','med-naming','med-offset-apply']){
+   $(id).addEventListener('change',refresh);
+ }
+ $('med-download').addEventListener('click',()=>{
+   if(!completed)return;
+   const filename=$('med-filename').textContent.replace(/\.[^.]+$/,'')+'_MED_'+completed.places+'dec.med';
+   const blob=new Blob([completed.body],{type:'text/plain;charset=us-ascii'});
+   const url=URL.createObjectURL(blob),link=document.createElement('a');
+   link.href=url;link.download=filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+ });
+ $('med-copy').addEventListener('click',async()=>{if(!completed)return;try{await navigator.clipboard.writeText(completed.medLines.slice(0,12).join('\n'));$('med-ready').textContent='Пример MED скопирован.';}catch(e){$('med-error').textContent='Не удалось скопировать: '+e.message;}});
+})();
 </script>
 </body>
 </html>
