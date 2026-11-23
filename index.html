@@ -2,21 +2,24 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lixel → AutoCAD · DXF + Heights Converter v1.6</title>
+<title>Lixel → AutoCAD · DXF + Heights + GSI Converter v1.7</title>
 <style>
 :root{color-scheme:light;--ink:#17202e;--sub:#657083;--edge:#e2e7ed;--bg:#f4f6fa;--accent:#2259cc;--pale:#eef4ff;--ok:#17693b;--warn:#97520d}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}main{max-width:900px;margin:0 auto;padding:40px 20px 68px}.eyebrow{letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-size:11px;font-weight:800}.hero{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:27px}h1{font-size:clamp(27px,5vw,40px);line-height:1.13;letter-spacing:-.035em;margin:8px 0 10px}p{margin:0;color:var(--sub)}.pill{background:#e3eafa;color:#244ba2;padding:6px 10px;font-size:12px;border-radius:50px;white-space:nowrap;font-weight:700}.drop{border:2px dashed #a9bad6;background:#fff;border-radius:18px;padding:35px 22px;text-align:center;transition:.2s}.drop.over{border-color:var(--accent);background:var(--pale)}.drop .ico{font-size:31px;margin-bottom:8px}.drop h2{font-size:20px;letter-spacing:-.02em;margin:0 0 6px}.drop p{margin-bottom:18px}input[type=file]{position:absolute;clip:rect(0 0 0 0);width:1px;height:1px;overflow:hidden}.btn{display:inline-flex;justify-content:center;align-items:center;gap:6px;background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:9px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;line-height:1.3;text-decoration:none}.btn:hover{filter:brightness(.94)}.btn.ghost{background:#fff;color:var(--ink);border-color:#d1d9e4}.btn:disabled{opacity:.45;cursor:not-allowed}.section-title{display:flex;justify-content:space-between;align-items:center;margin:28px 0 13px}.section-title h2{font-size:18px;margin:0}.hint{font-size:12px;color:var(--sub)}.files{display:grid;gap:12px}.file{background:#fff;border:1px solid var(--edge);border-radius:13px;padding:19px}.file-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}.file-name{font-size:16px;font-weight:750;overflow-wrap:anywhere}.file-size{color:var(--sub);font-size:12px}.stats{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.tag{background:#f3f5f8;border:1px solid #edf0f3;border-radius:7px;padding:3px 8px;font-size:12px}.msg{font-size:13px;color:var(--sub);margin-top:10px}.msg.warning{color:var(--warn)}.msg.success{color:var(--ok)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:20px}.info{padding:18px;background:#fff;border:1px solid var(--edge);border-radius:12px}.info h3{font-size:15px;margin:0 0 7px}.info p{font-size:13px}.foot{font-size:12px;color:var(--sub);margin-top:22px}.empty{color:var(--sub);font-size:13px}code{background:#f0f3f7;border-radius:4px;padding:1px 4px}.downloadall{display:none}.file .bad{color:#b42318}details{margin-top:20px;border:1px solid var(--edge);border-radius:12px;background:#fff;padding:14px 18px}summary{font-weight:700;cursor:pointer}ol{padding-left:22px;color:var(--sub)}ol li{padding:3px 0}@media(max-width:600px){main{padding:28px 13px}.hero{display:block}.pill{display:inline-block;margin-top:13px}.card-grid{grid-template-columns:1fr}.drop{padding:25px 13px}}
 
 .tool-tabs{display:flex;gap:8px;background:#e7edf7;padding:5px;border-radius:12px;margin:0 0 18px}.tool-tab{flex:1;background:transparent;border:0;border-radius:8px;padding:12px 10px;color:#4e617d;font-size:15px;font-weight:700;cursor:pointer}.tool-tab.active{background:#fff;color:#194bb3;box-shadow:0 1px 6px #17202e15}.tool-panel[hidden],#pt-file-info[hidden],#pt-settings[hidden]{display:none!important}.settings-title{font-size:17px;margin:0 0 10px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fields label{display:grid;gap:6px;font-size:13px;font-weight:700;color:#4d5b6f}.fields select,.fields input[type="number"]{width:100%;min-width:0;padding:10px;border:1px solid #cbd4df;background:#fff;border-radius:8px;color:var(--ink);font-size:14px}.checkline{display:flex;gap:9px;align-items:center;margin-top:15px;font-size:14px;color:var(--ink);font-weight:600;cursor:pointer}.checkline input{width:17px;height:17px}.pt-preview{white-space:pre;overflow-x:auto;max-height:260px;background:#141d2b;color:#d1f4d9;border-radius:10px;padding:16px 13px;font-size:13px;line-height:1.6;tab-size:4}.pt-settings .bad{color:#b42318}.pt-settings .success{color:#17693b}@media(max-width:600px){.fields{grid-template-columns:1fr}.tool-tab{font-size:13px;padding:10px 5px}}
+
+.gsi-textarea{width:100%;min-height:145px;resize:vertical;padding:11px 12px;border:1px solid #cbd4df;border-radius:8px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink);background:#fff}.gsi-check{white-space:pre-wrap}.gsi-fields select{width:100%;min-width:0;padding:10px;border:1px solid #cbd4df;background:#fff;border-radius:8px;color:var(--ink);font-size:14px}
 </style>
 </head>
 <body>
 <main>
- <section class="hero"><div><div class="eyebrow">Локальная утилита · Без сервера</div><h1>Lixel → AutoCAD <small style="font-size:.32em;vertical-align:middle;color:#657083">v1.6</small></h1><p>Исправление DXF и преобразование файлов с высотами из TXT/CSV/XYZ в DXF для AutoCAD. Обработка файлов только на твоём устройстве.</p></div><span class="pill">v1.6 · Офлайн</span></section>
+ <section class="hero"><div><div class="eyebrow">Локальная утилита · Без сервера</div><h1>Lixel → AutoCAD <small style="font-size:.32em;vertical-align:middle;color:#657083">v1.7</small></h1><p>Исправление DXF, преобразование высот в блоки M1502 и создание файлов опорных точек Lixel Studio из Leica GSI. Обработка файлов только на твоём устройстве.</p></div><span class="pill">v1.7 · Офлайн</span></section>
 
  <div class="tool-tabs" role="tablist" aria-label="Выбери конвертер">
   <button class="tool-tab active" type="button" data-tool="dxf" role="tab" aria-selected="true">📐 DXF → AutoCAD</button>
   <button class="tool-tab" type="button" data-tool="points" role="tab" aria-selected="false">📍 Точки → DXF</button>
+  <button class="tool-tab" type="button" data-tool="gsi" role="tab" aria-selected="false">🛰️ GSI → Lixel GCP</button>
  </div>
  <div id="dxf-mode" class="tool-panel">
  <section id="drop" class="drop" aria-label="Загрузить файлы DXF"><div class="ico">📐</div><h2>Перетащи DXF-файлы сюда</h2><p>Или выбери их на компьютере. Можно загрузить несколько файлов одновременно.</p><label class="btn" for="pick">Выбрать DXF-файлы</label><input id="pick" type="file" accept=".dxf,application/dxf,text/plain" multiple></section>
@@ -62,6 +65,34 @@
   <details><summary>Как перенести точки в существующий DWG</summary><ol><li>Выбери 2D, если работаешь в плане, или 3D для точек с исходной высотой.</li><li>Скачай DXF и открой в AutoCAD. Выбери одну отметку: в свойствах должно быть <code>Block Reference</code>, имя <code>M1502</code>. Командой <code>EATTEDIT</code> можно изменить атрибут <code>HEIGHT</code>.</li><li>Чтобы перенести в свой чертёж: <code>COPYBASE</code> с базой <code>0,0,0</code> → выделить все → в основном DWG <code>PASTECLIP</code> в <code>0,0,0</code>. Проверь WCS и одинаковые единицы (метры).</li><li>Для отображения номеров выбери режим «Показывать в блоке» до экспорта.</li></ol></details>
   <p class="foot">Без загрузки файлов на сервер. Блок M1502 создаётся с правильными именем и атрибутами HEIGHT / MARK / NAME, но его упрощённый графический символ может отличаться от официальной библиотеки GEOMAVAT. Для точного соответствия офисному шаблону нужен исходный блок M1502. Перед сдачей карты проверь несколько точек в AutoCAD.</p>
  </div>
+
+ <div id="gsi-mode" class="tool-panel" hidden>
+  <section class="drop" id="gsi-drop" aria-label="Загрузить Leica GSI"><div class="ico">🛰️</div><h2>Leica GSI → опорные точки Lixel Studio</h2><p>Загрузи текстовый GSI. Программа извлечёт имена и координаты точек, уберёт дубли и создаст CSV/TXT без заголовка для Map Fusion → Coordinate Transformation.</p><label for="gsi-pick" class="btn">Выбрать GSI-файл</label><input type="file" id="gsi-pick" accept=".gsi,.GSI,text/plain"></section>
+  <div id="gsi-file-info" class="file" hidden style="margin-top:16px"><div class="file-name" id="gsi-filename"></div><p class="hint" id="gsi-summary"></p><div class="msg" id="gsi-duplicates"></div></div>
+  <section class="file pt-settings" id="gsi-settings" hidden style="margin-top:15px">
+    <h2 class="settings-title">Настройки GSI</h2>
+    <div class="fields gsi-fields">
+      <label>Масштаб координат<select id="gsi-scale"><option value="0.001">÷1000 → метры (обычный Leica GSI)</option><option value="1">Без масштабирования</option><option value="0.0001">÷10000</option><option value="0.00001">÷100000</option></select></label>
+      <label>Точность экспорта<select id="gsi-precision"><option value="3">3 знака — рекомендуется</option><option value="4">4 знака</option><option value="5">5 знаков</option></select></label>
+    </div>
+    <h2 class="settings-title" style="margin-top:21px">Добавить / заменить контрольные точки</h2>
+    <p class="hint" style="margin-bottom:8px">Необязательно. Вставь известные координаты RTK/тахеометра: <code>A1 180680.145 647434.147 35.766</code>. Если имя уже есть в GSI, внешняя координата заменит его. До замены ниже показывается расхождение.</p>
+    <textarea id="gsi-overrides" class="gsi-textarea" spellcheck="false" placeholder="A1 180680.145 647434.147 35.766&#10;A2 180706.918 647480.437 31.407"></textarea>
+    <div class="msg gsi-check" id="gsi-check"></div>
+    <div class="msg" id="gsi-error" role="alert" style="color:#b42318;margin-top:13px"></div>
+    <div class="msg" id="gsi-ready" style="color:#17693b;margin-top:10px"></div>
+    <div class="section-title"><h2>Предпросмотр итогового файла</h2><span class="hint" id="gsi-count"></span></div>
+    <pre class="pt-preview" id="gsi-preview" aria-label="Предпросмотр опорных точек"></pre>
+    <div class="actions"><button class="btn" id="gsi-download-csv" type="button" disabled>Скачать CSV для Lixel Studio</button><button class="btn ghost" id="gsi-download-txt" type="button" disabled>Скачать TXT</button></div>
+  </section>
+  <div class="card-grid">
+   <section class="info"><h3>Что читается из GSI</h3><p><code>11</code> — имя точки. Координаты измеренных точек: <code>81 / 82 / 83</code>. Координаты установки станции: <code>84 / 85 / 86</code>. Если имя встречается несколько раз и есть запись станции, она имеет приоритет.</p></section>
+   <section class="info"><h3>Формат Lixel Studio</h3><p>Файл создаётся без заголовка в порядке <code>Point,Easting,Northing,Elevation</code>, например <code>A1,180680.145,647434.147,35.766</code>.</p></section>
+  </div>
+  <details><summary>Как использовать в Lixel Studio</summary><ol><li>Загрузи GSI и проверь первые координаты в предпросмотре.</li><li>Если есть более точные внешние координаты контрольных точек, вставь их в поле выше.</li><li>Скачай CSV.</li><li>В Lixel Studio открой <code>Project Processing → Map Fusion → Coordinate Transformation</code> и загрузи файл опорных точек.</li><li>Перед трансформацией проверь совпадение имён точек и остаточные ошибки.</li></ol></details>
+  <p class="foot">Все вычисления выполняются локально в браузере. По умолчанию используется масштаб ÷1000, проверенный на твоём Leica GSI. Если другой прибор экспортирует другой масштаб, его можно переключить вручную.</p>
+ </div>
+
 </main>
 <script>
 'use strict';
@@ -329,7 +360,7 @@ elPick.addEventListener('change',e=>{addFiles(e.target.files);elPick.value=''});
  document.querySelectorAll('[data-tool]').forEach(tab => tab.addEventListener('click', () => {
    const mode = tab.dataset.tool;
    document.querySelectorAll('[data-tool]').forEach(t => {t.classList.toggle('active',t.dataset.tool===mode);t.setAttribute('aria-selected',String(t.dataset.tool===mode));});
-   $('dxf-mode').hidden=mode!=='dxf'; $('points-mode').hidden=mode!=='points';
+   $('dxf-mode').hidden=mode!=='dxf'; $('points-mode').hidden=mode!=='points'; $('gsi-mode').hidden=mode!=='gsi';
  }));
  let current=null, completed=null;
  const aliases={
@@ -486,5 +517,138 @@ elPick.addEventListener('change',e=>{addFiles(e.target.files);elPick.value=''});
  });
 })();
 </script>
+
+<script>
+'use strict';
+(() => {
+ const $ = id => document.getElementById(id);
+ let rawText='', completed=null;
+
+ function parseWord(token){
+   const w=String(token||'').trim().replace(/^\*/, '');
+   if(w.length<8)return null;
+   const wi=w.slice(0,2),info=w.slice(2,6),sign=w.charAt(6),value=w.slice(7);
+   if(!/^\d{2}$/.test(wi)||(sign!=='+'&&sign!=='-')||!value)return null;
+   return {wi,info,sign,value};
+ }
+ function cleanName(value){
+   const s=String(value||'').trim().replace(/^0+(?=.)/, '');
+   return s||'0';
+ }
+ function decodeCoord(word,scale){
+   if(!word||!/^\d+$/.test(word.value))throw Error('Некорректная координата GSI.');
+   const n=Number(word.value);
+   if(!Number.isFinite(n))throw Error('Координата GSI вне числового диапазона.');
+   return (word.sign==='-'?-1:1)*n*scale;
+ }
+ function naturalCompare(a,b){return a.localeCompare(b,undefined,{numeric:true,sensitivity:'base'});}
+ function parseGsi(text,scale){
+   const candidates=new Map();let coordinateRecords=0;
+   for(const raw of String(text||'').replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n').split('\n')){
+     const line=raw.trim();if(!line)continue;
+     const words={};
+     for(const token of line.split(/\s+/)){const w=parseWord(token);if(w)words[w.wi]=w;}
+     if(!words['11'])continue;
+     const point=cleanName(words['11'].value);
+     let kind='',keys=null;
+     if(words['84']&&words['85']&&words['86']){kind='station';keys=['84','85','86'];}
+     else if(words['81']&&words['82']&&words['83']){kind='measured';keys=['81','82','83'];}
+     if(!keys)continue;
+     const xyz=keys.map(k=>decodeCoord(words[k],scale));coordinateRecords++;
+     if(!candidates.has(point))candidates.set(point,[]);
+     candidates.get(point).push({kind,xyz});
+   }
+   if(!coordinateRecords)throw Error('В файле не найдены координатные записи 81/82/83 или 84/85/86.');
+   const rows=[],duplicates=[];let stationChosen=0,measuredChosen=0,maxSpread=0;
+   for(const [name,list] of candidates){
+     const chosen=list.find(x=>x.kind==='station')||list[0];
+     chosen.kind==='station'?stationChosen++:measuredChosen++;
+     let localMax=0;
+     for(const item of list){
+       const d=Math.hypot(item.xyz[0]-chosen.xyz[0],item.xyz[1]-chosen.xyz[1],item.xyz[2]-chosen.xyz[2]);
+       localMax=Math.max(localMax,d);maxSpread=Math.max(maxSpread,d);
+     }
+     if(list.length>1)duplicates.push({name,count:list.length,maxSpread:localMax});
+     rows.push({name,e:chosen.xyz[0],n:chosen.xyz[1],h:chosen.xyz[2],source:chosen.kind});
+   }
+   rows.sort((a,b)=>naturalCompare(a.name,b.name));
+   return {rows,byName:new Map(rows.map(r=>[r.name,r])),stats:{coordinateRecords,unique:rows.length,duplicates,stationChosen,measuredChosen,maxSpread}};
+ }
+ function parseOverrides(text){
+   const out=new Map();let lineNo=0;
+   for(const raw of String(text||'').replace(/\r\n?/g,'\n').split('\n')){
+     lineNo++;const line=raw.trim();
+     if(!line||line.startsWith('#')||line.startsWith('//'))continue;
+     const f=line.split(/[\s,;]+/).filter(Boolean);
+     if(f.length<4)throw Error('Дополнительные точки: строка '+lineNo+' должна содержать имя, Easting, Northing, Elevation.');
+     const name=f[0].trim(),values=f.slice(1,4).map(v=>Number(v));
+     if(!name||values.some(v=>!Number.isFinite(v)))throw Error('Дополнительные точки: ошибка координат в строке '+lineNo+'.');
+     out.set(name,{name,e:values[0],n:values[1],h:values[2],source:'external'});
+   }
+   return out;
+ }
+ function assemble(){
+   const scale=Number($('gsi-scale').value),precision=Number($('gsi-precision').value);
+   const base=parseGsi(rawText,scale),external=parseOverrides($('gsi-overrides').value);
+   const merged=new Map(base.rows.map(r=>[r.name,r])),checks=[];let replaced=0,added=0;
+   for(const [name,row] of external){
+     const old=base.byName.get(name);
+     if(old){
+       replaced++;
+       const de=row.e-old.e,dn=row.n-old.n,dz=row.h-old.h;
+       checks.push({name,de,dn,dz,horizontal:Math.hypot(de,dn),d3:Math.hypot(de,dn,dz)});
+     }else added++;
+     merged.set(name,row);
+   }
+   const rows=[...merged.values()].sort((a,b)=>naturalCompare(a.name,b.name));
+   return {base,rows,precision,externalCount:external.size,replaced,added,checks};
+ }
+ function makeText(data,rows=data.rows){
+   return rows.map(r=>r.name+','+r.e.toFixed(data.precision)+','+r.n.toFixed(data.precision)+','+r.h.toFixed(data.precision)).join('\n')+'\n';
+ }
+ function compareText(checks){
+   if(!checks.length)return '';
+   return 'Сравнение внешних координат с одноимёнными точками GSI (внешние − GSI):\n'+checks.map(c=>c.name+': ΔE '+(c.de>=0?'+':'')+c.de.toFixed(3)+' м; ΔN '+(c.dn>=0?'+':'')+c.dn.toFixed(3)+' м; ΔZ '+(c.dz>=0?'+':'')+c.dz.toFixed(3)+' м; план '+c.horizontal.toFixed(3)+' м').join('\n');
+ }
+ function basename(){return ($('gsi-filename').textContent||'control_points').replace(/\.[^.]+$/,'').replace(/[^\w.\-А-Яа-я]+/g,'_');}
+ function downloadText(name,text,type){
+   const blob=new Blob([text],{type:type||'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+   a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000);
+ }
+ function refresh(){
+   $('gsi-error').textContent='';$('gsi-ready').textContent='';$('gsi-check').textContent='';$('gsi-preview').textContent='';$('gsi-count').textContent='';
+   $('gsi-download-csv').disabled=true;$('gsi-download-txt').disabled=true;completed=null;
+   if(!rawText)return;
+   try{
+     completed=assemble();const st=completed.base.stats;
+     $('gsi-summary').textContent=st.coordinateRecords+' координатных записей · '+st.unique+' уникальных точек · выбрано станций: '+st.stationChosen+' · измеренных: '+st.measuredChosen;
+     $('gsi-duplicates').textContent=st.duplicates.length?'Повторяющихся имён: '+st.duplicates.length+'. При наличии 84/85/86 выбрана запись станции. Максимальное отличие повторных записей: '+st.maxSpread.toFixed(3)+' м.':'Повторяющихся имён точек нет.';
+     $('gsi-check').textContent=compareText(completed.checks);
+     const extra=completed.externalCount?' Внешних точек: '+completed.externalCount+'; заменено '+completed.replaced+', добавлено '+completed.added+'.':'';
+     $('gsi-ready').textContent='Готово: '+completed.rows.length+' опорных точек для Lixel Studio.'+extra;
+     $('gsi-count').textContent=completed.rows.length+' точек';
+     $('gsi-preview').textContent=makeText(completed,completed.rows.slice(0,14)).trimEnd()+(completed.rows.length>14?'\n…':'');
+     $('gsi-download-csv').disabled=false;$('gsi-download-txt').disabled=false;
+   }catch(e){$('gsi-error').textContent='Ошибка: '+e.message;}
+ }
+ async function selectFile(file){
+   if(!file)return;
+   try{
+     const bytes=await file.arrayBuffer();
+     try{rawText=new TextDecoder('utf-8',{fatal:true}).decode(bytes);}catch(_){rawText=new TextDecoder('windows-1251').decode(bytes);}
+     $('gsi-filename').textContent=file.name;$('gsi-file-info').hidden=false;$('gsi-settings').hidden=false;refresh();
+   }catch(e){rawText='';completed=null;$('gsi-file-info').hidden=false;$('gsi-settings').hidden=true;$('gsi-filename').textContent='Ошибка: '+e.message;$('gsi-summary').textContent='';$('gsi-duplicates').textContent='';}
+ }
+ const pick=$('gsi-pick'),drop=$('gsi-drop');
+ pick.addEventListener('change',e=>{selectFile(e.target.files[0]);pick.value='';});
+ drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('over');});
+ drop.addEventListener('dragleave',()=>drop.classList.remove('over'));
+ drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('over');selectFile(e.dataTransfer?.files?.[0]);});
+ $('gsi-scale').addEventListener('change',refresh);$('gsi-precision').addEventListener('change',refresh);$('gsi-overrides').addEventListener('input',refresh);
+ $('gsi-download-csv').addEventListener('click',()=>{if(completed)downloadText(basename()+'_Lixel_GCP.csv',makeText(completed),'text/csv;charset=utf-8');});
+ $('gsi-download-txt').addEventListener('click',()=>{if(completed)downloadText(basename()+'_Lixel_GCP.txt',makeText(completed),'text/plain;charset=utf-8');});
+})();
+</script>
+
 </body>
 </html>
